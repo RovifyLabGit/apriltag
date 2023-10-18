@@ -39,12 +39,12 @@ typedef long long suseconds_t;
 #ifdef _MSC_VER
 #include <sys/timeb.h>
 
-struct timeval {
+struct timeval_ {
     time_t tv_sec;    // seconds
     long long tv_usec;// microseconds
 };
 
-inline int gettimeofday(struct timeval *tp, void *tzp)
+inline int gettimeofday(struct timeval_ *tp, void *tzp)
 {
     struct __timeb64 timebuffer;
     _ftime64(&timebuffer);
