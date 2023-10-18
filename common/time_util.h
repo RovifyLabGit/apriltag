@@ -37,15 +37,23 @@ typedef long long suseconds_t;
 #endif
 
 #ifdef _MSC_VER
+#include <sys/timeb.h>
 
-inline int gettimeofday(struct timeval* tp, void* tzp)
+struct timeval {
+    time_t tv_sec;    // seconds
+    long long tv_usec;// microseconds
+};
+
+inline int gettimeofday(struct timeval *tp, void *tzp)
 {
-  unsigned long t;
-  t = time(NULL);
-  tp->tv_sec = t / 1000;
-  tp->tv_usec = t % 1000;
-  return 0;
+    struct __timeb64 timebuffer;
+    _ftime64(&timebuffer);
+
+    tp->tv_sec  = timebuffer.time;
+    tp->tv_usec = timebuffer.millitm * 1000;// Convert milliseconds to microseconds
+    return 0;
 }
+
 #else
 #include <sys/time.h>
 #include <unistd.h>
