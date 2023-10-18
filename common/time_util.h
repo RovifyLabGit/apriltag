@@ -31,6 +31,12 @@ either expressed or implied, of the Regents of The University of Michigan.
 #include <stdint.h>
 #include <time.h>
 
+struct timeval_ {
+    time_t tv_sec;    // seconds
+    long long tv_usec;// microseconds
+};
+
+
 #ifdef _WIN32
 #include <windows.h>
 typedef long long suseconds_t;
@@ -38,11 +44,6 @@ typedef long long suseconds_t;
 
 #ifdef _MSC_VER
 #include <sys/timeb.h>
-
-struct timeval_ {
-    time_t tv_sec;    // seconds
-    long long tv_usec;// microseconds
-};
 
 inline int gettimeofday(struct timeval_ *tp, void *tzp)
 {
